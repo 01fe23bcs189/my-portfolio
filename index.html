@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio with Dark Mode & Colorful Navbar</title>
+    <link rel="stylesheet" href="b.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="light-mode">
+
+    <header id="header" class="main-header hidden"> 
+        <nav>
+            <h2 class="logo">My Portfolio</h2>
+            <ul class="nav-links">
+                <li><button class="nav-button active" data-section="aboutSection">About</button></li>
+                <li><button class="nav-button" data-section="educationSection">Education</button></li>
+                <li><button class="nav-button" data-section="workSection">Work Experience</button></li>
+                <li><button class="nav-button" data-section="skillsSection">Skills</button></li>
+                <li><button class="nav-button" data-section="projectsSection">Projects</button></li>
+                <li><button class="nav-button" data-section="certificationsSection">Certifications</button></li>
+                <li><button class="nav-button" data-section="languagesSection">Languages</button></li>
+                <li><button class="nav-button" data-section="hobbiesSection">Hobbies</button></li>
+                <li><button class="nav-button" data-section="contactSection">Contact</button></li>
+            </ul>
+            <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌙</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="formSection" class="section active">
+            <h1>Fill Your Resume Details</h1>
+            <form id="resumeForm" novalidate>
+                <fieldset>
+                    <legend>Personal Info</legend>
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" required />
+                    
+                    <label for="photoFile">Profile Photo File * (Select from your PC)</label>
+                    <input type="file" id="photoFile" accept="image/*" required />
+
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" required />
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" />
+                    <label for="linkedin">LinkedIn URL</label>
+                    <input type="url" id="linkedin" />
+                    <label for="github">GitHub URL</label>
+                    <input type="url" id="github" />
+                </fieldset>
+
+                <fieldset>
+                    <legend>Career Objective / Summary *</legend>
+                    <textarea id="careerObjective" rows="4" placeholder="Briefly describe your career goals" required></textarea>
+                </fieldset>
+
+                <fieldset id="educationFieldset">
+                    <legend>Education (High school, PU College, Degree College optional)</legend>
+                    <div class="entry education-entry">
+                        <label>Institution *</label>
+                        <input type="text" class="education-institution" required />
+                        <label>Degree (optional)</label>
+                        <input type="text" class="education-degree" />
+                        <label>Years *</label>
+                        <input type="text" class="education-years" placeholder="2018 - 2022" required />
+                        <label>Achievements / Activities</label>
+                        <textarea class="education-achievement" rows="2"></textarea>
+                        <button type="button" class="remove-entry-btn" aria-label="Remove education entry">×</button>
+                    </div>
+                </fieldset>
+                <button type="button" id="addEducationBtn" class="add-btn">+ Add Education</button>
+
+                <fieldset id="workFieldset">
+                    <legend>Work Experience / Internships</legend>
+                    <div class="entry work-entry">
+                        <label>Company *</label>
+                        <input type="text" class="work-company" required />
+                        <label>Role *</label>
+                        <input type="text" class="work-role" required />
+                        <label>Duration *</label>
+                        <input type="text" class="work-duration" placeholder="Jan 2023 - Present" required />
+                        <label>Responsibilities / Achievements *</label>
+                        <textarea class="work-responsibilities" rows="3" required></textarea>
+                        <button type="button" class="remove-entry-btn" aria-label="Remove work entry">×</button>
+                    </div>
+                </fieldset>
+                <button type="button" id="addWorkBtn" class="add-btn">+ Add Work Experience</button>
+
+                <fieldset>
+                    <legend>Skills * (Use commas to separate)</legend>
+                    <input type="text" id="skills" placeholder="HTML, CSS, JavaScript" required />
+                </fieldset>
+
+                <fieldset id="projectsFieldset">
+                    <legend>Projects</legend>
+                    <div class="entry project-entry">
+                        <label>Title *</label>
+                        <input type="text" class="project-title" required />
+                        <label>Description *</label>
+                        <textarea class="project-desc" rows="3" required></textarea>
+                        <label>Technologies Used</label>
+                        <input type="text" class="project-tech" placeholder="React, Node.js" />
+                        <label>Project Link</label>
+                        <input type="url" class="project-link" />
+                        <label>Upload Project File (optional)</label>
+                        <input type="file" class="project-file" />
+                        <button type="button" class="remove-entry-btn" aria-label="Remove project entry">×</button>
+                    </div>
+                </fieldset>
+                <button type="button" id="addProjectBtn" class="add-btn">+ Add Project</button>
+
+                <fieldset id="certificationsFieldset">
+                    <legend>Certifications / Awards</legend>
+                    <div class="entry certification-entry">
+                        <label>Title *</label>
+                        <input type="text" class="certification-title" required />
+                        <label>Issuer</label>
+                        <input type="text" class="certification-issuer" />
+                        <label>Date</label>
+                        <input type="text" class="certification-date" placeholder="YYYY" />
+                        <button type="button" class="remove-entry-btn" aria-label="Remove certification entry">×</button>
+                    </div>
+                </fieldset>
+                <button type="button" id="addCertBtn" class="add-btn">+ Add Certification</button>
+
+                <fieldset>
+                    <legend>Languages</legend>
+                    <input type="text" id="languages" placeholder="English (Fluent), Hindi (Native)" />
+                </fieldset>
+
+                <fieldset>
+                    <legend>Hobbies</legend>
+                    <input type="text" id="hobbies" placeholder="Reading, Coding, Sports" />
+                </fieldset>
+
+                <button type="submit" class="submit-btn">Generate Portfolio</button>
+            </form>
+        </section>
+
+        <section id="portfolioSection" class="hidden">
+            <div style="height: 1in;"></div>
+
+            <div class="portfolio-header" role="banner">
+                <img id="profilePic" alt="Profile Picture" />
+                <h1 id="displayName"></h1>
+            </div>
+
+            <section id="aboutSection" class="portfolio-item active" tabindex="0" role="region" aria-label="About Me">
+                <h2>About Me</h2>
+                <p id="displayCareerObjective"></p>
+                <div class="nav-section-buttons">
+                    <button id="aboutNextBtn" class="nav-btn">Next</button>
+                </div>
+            </section>
+
+            <section id="educationSection" class="portfolio-item" tabindex="0" role="region" aria-label="Education">
+                <h2>Education</h2>
+                <div id="displayEducation"></div>
+                <div class="nav-section-buttons">
+                    <button id="educationBackBtn" class="nav-btn">Back</button>
+                    <button id="educationNextBtn" class="nav-btn">Next</button>
+                </div>
+            </section>
+
+            <section id="workSection" class="portfolio-item" tabindex="0" role="region" aria-label="Work Experience">
+                <h2>Work Experience</h2>
+                <div id="displayWork"></div>
+                <div class="nav-section-buttons">
+                    <button id="workBackBtn" class="nav-btn">Back</button>
+                    <button id="workNextBtn" class="nav-btn">Next</button>
+                </div>
+            </section>
+
+            <section id="skillsSection" class="portfolio-item" tabindex="0" role="region" aria-label="Skills">
+                <h2>Skills</h2>
+                <ul id="displaySkills" class="skills-list"></ul>
+                <div class="nav-section-buttons">
+                    <button id="skillsBackBtn" class="nav-btn">Back</button>
+                    <button id="skillsNextBtn" class="nav-btn">Next</button>
+                </div>
+            </section>
+
+            <section id="projectsSection" class="portfolio-item" tabindex="0" role="region" aria-label="Projects">
+                <h2>Projects</h2>
+                <div id="displayProjects"></div>
+                <div class="nav-section-buttons">
+                    <button id="projectsBackBtn" class="nav-btn">Back</button>
+                    <button id="projectsNextBtn" class="nav-btn">Next</button>
+                </div>
+            </section>
+
+            <section id="certificationsSection" class="portfolio-item" tabindex="0" role="region" aria-label="Certifications">
+                <h2>Certifications</h2>
+                <div id="displayCertifications"></div>
+                <div class="nav-section-buttons">
+                    <button id="certificationsBackBtn" class="nav-btn">Back</button>
+                    <button id="certificationsNextBtn" class="nav-btn">Next</button>
+                </div>
+            </section>
+
+            <section id="languagesSection" class="portfolio-item" tabindex="0" role="region" aria-label="Languages">
+                <h2>Languages</h2>
+                <p id="displayLanguages"></p>
+                <div class="nav-section-buttons">
+                    <button id="languagesBackBtn" class="nav-btn">Back</button>
+                    <button id="languagesNextBtn" class="nav-btn">Next</button>
+                </div>
+            </section>
+
+            <section id="hobbiesSection" class="portfolio-item" tabindex="0" role="region" aria-label="Hobbies">
+                <h2>Hobbies</h2>
+                <p id="displayHobbies"></p>
+                <div class="nav-section-buttons">
+                    <button id="hobbiesBackBtn" class="nav-btn">Back</button>
+                    <button id="hobbiesNextBtn" class="nav-btn">Next</button>
+                </div>
+            </section>
+
+            <section id="contactSection" class="portfolio-item" tabindex="0" role="region" aria-label="Contact">
+                <h2>Contact</h2>
+                <p>Email: <a href="#" id="displayEmail"></a></p>
+                <p id="displayPhone"></p>
+                <p id="displayLinkedIn"></p>
+                <p id="displayGitHub"></p>
+                <div class="nav-section-buttons">
+                    <button id="contactBackBtn" class="nav-btn">Back</button>
+                </div>
+            </section>
+
+            <button id="downloadResume" class="submit-btn">Download Resume PDF</button>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
